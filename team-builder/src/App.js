@@ -4,29 +4,46 @@ import './App.css';
 import Form from "./Form.js";
 import FormResults from "./FormResults.js"
 
-function App() {
-  const [teamMember, setTeamMember] = useState([{
+const initialFormValues = {
+  name: "",
+  email: "",
+  role: "",
 
-  }])
-  const addNewMember = member => {
-    const newMember = {
-      id: Date.now(),
-      name: member.name,
-      email: member.email,
-      role: member.role
+}
+
+function App() {
+  
+  const [formValues, setFormValues] = useState(initialFormValues)
+  
+  //Here
+
+  const updateForm = (inputName, inputValue) => {
+    setFormValues({
+      ...formValues,
+      [inputName]: inputValue,
+    });
+  };
+  const submitForm = () => {
+    let newFriend = {
+      name: formValues.name.trim(),
+      email: formValues.email.trim(),
+      role: formValues.role,
     };
-    setTeamMember([...teamMember, newMember])
-  }
+    if (!newFriend.username || !newFriend.email || !newFriend.role) return;
+}   
   return (
     <div className="App">
       <header className="App-header">
         <h1>Team Builder</h1>
         <img src={logo} className="App-logo" alt="logo" />
-        <Form addNewmember={addNewMember}/>
-        <FormResults teamMember={teamMember}/>
+        <Form 
+        values={formValues}
+        update={updateForm}
+        submit={submitForm}
+        />
+       <FormResults/> 
       </header>
     </div>
   );
 }
-
 export default App;

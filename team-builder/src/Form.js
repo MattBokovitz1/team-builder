@@ -1,57 +1,58 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 const Form = props => {
 
-    const [member, setMember] = useState({
-        name: '',
-        email: '',
-        role: ''
-     })
+    const { values, update, submit } = props;
 
-    const handleChanges = e => {
-        setMember({...member, [e.target.name]: e.target.value})
+    const onChange = (evt) => {
+        const{name, value} = evt.target;
+        update(name, value)
+    };
 
+    const onSubmit = (evt) => {
+        evt.preventDefault();
+        submit();
     }
 
-    const submitForm = e => {
-        e.preventDefault();
-        props.addNewMember(member);
-        setMember({name: '', email: '', role: ''})
-    }
 
     return(
-        <div>
-        <form onSubmit={submitForm}>
-            <label>Name: </label>
+        
+        <form onSubmit={onSubmit}>
+        <div>   
+            <label>Name: 
             <input 
                 id="name"
                 name="name" 
                 type="text" 
-                value={member.name}
-                onChange={handleChanges}
+                value={values.name}
+                onChange={onChange}
                 placeholder={"Enter Your Name"}/><br/>
-            <label>Email: </label>
+            </label>    
+            <label>Email: 
             <input 
                 id="email"
                 name="email" 
                 type="email" 
-                value={member.email}
-                onChange={handleChanges}
+                value={values.email}
+                onChange={onChange}
                 placeholder={"Enter Your Email"}/><br/>
-            <label>Role: </label>
+            </label>    
+            <label>Role: 
             <select>
                 id="role"
                 name="role" 
-                value={member.role}
-                onChange={handleChanges}
+                value={values.role}
+                onChange={onChange}
                 <option>---select role---</option> 
                 <option>Front-End Web Developer</option>
                 <option>Back-End Web Developer</option>
                 <option>Full-Stack Web Developer</option>
             </select>
+            </label>
             <button type="submit">Submit</button>
+        </div>
         </form>
-    </div>
+    
     )
 };
 
